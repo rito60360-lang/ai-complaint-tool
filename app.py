@@ -78,19 +78,19 @@ if st.button("返信生成"):
 
         safe_text = mask_info(detail)
         response = client.responses.create(
-    　　　　model="gpt-4.1-mini",
-    　　　　input=f"""
+        model="gpt-4.1-mini",
+        input=f"""
 あなたはECのカスタマーサポートです。
 
-条件:
+条件：
 ・丁寧
 ・絶対に「全額返金」などの約束は禁止
 ・会社ルールを守る
 
-ショップ名: {shop}
-顧客名: {customer}
-ルール: {rule}
-クレーム内容: {safe_text}
+ショップ名：{shop}
+顧客名：{customer}
+ルール：{rule}
+クレーム内容：{safe_text}
 
 上記をもとに返信文を作成してください。
 """
