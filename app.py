@@ -1,5 +1,7 @@
 import streamlit as st
 import re
+from openai import OpenAI
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
 st.set_page_config(page_title="ECクレーム対応AI Pro", layout="centered")
 
@@ -75,6 +77,27 @@ if st.button("返信生成"):
     else:
 
         safe_text = mask_info(detail)
+        response = client.responses.create(
+    　　　　model="gpt-4.1-mini",
+    　　　　input=f"""
+あなたはECのカスタマーサポートです。
+
+条件:
+・丁寧
+・絶対に「全額返金」などの約束は禁止
+・会社ルールを守る
+
+ショップ名: {shop}
+顧客名: {customer}
+ルール: {rule}
+クレーム内容: {safe_text}
+
+上記をもとに返信文を作成してください。
+"""
+)
+
+st.success("返信文")
+st.write(response.output[0].content[0].text)
 
         # クレーム別
         if issue == "配送遅延":
